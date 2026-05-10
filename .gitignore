@@ -1,0 +1,20 @@
+.env
+.env.*
+!.env.example
+
+# Python cache/build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Local environments
+.venv/
+venv/
+
+# Local runtime artifacts
+discord.log
+auctionworld.db
+
+# Local-only script (excluded for now)
+test.py

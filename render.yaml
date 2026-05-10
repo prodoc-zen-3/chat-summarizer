@@ -1,0 +1,17 @@
+services:
+  - type: worker
+    name: chat-summarizer-bot
+    env: docker
+    plan: starter
+    autoDeploy: true
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_SITE_URL
+        sync: false
+      - key: OPENROUTER_SITE_NAME
+        sync: false
+      - key: DISCORD_GUILD_ID
+        sync: false
