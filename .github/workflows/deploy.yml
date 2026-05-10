@@ -1,0 +1,23 @@
+`
+name: Chat Summarizer Bot Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH to EC2 and pull latest code
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ec2-user/jenryu
+            git pull
+            python3 -m py_compile bot.py
+            sudo systemctl restart chat-summarizer
+`
