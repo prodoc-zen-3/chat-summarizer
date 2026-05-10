@@ -18,6 +18,6 @@ jobs:
           script: |
             cd /home/ec2-user/jenryu
             git pull
-            python3 -m py_compile bot.py
+            python3 -m py_compile chat-summarizer-bot.py
             sudo systemctl restart chat-summarizer
 `
