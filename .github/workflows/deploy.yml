@@ -1,4 +1,3 @@
-`
 name: Chat Summarizer Bot Deployment
 
 on:
@@ -16,8 +15,7 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /home/ec2-user/jenryu
+            cd /home/ec2-user/jenryu/summarizer
             git pull
-            python3 -m py_compile chat-summarizer-bot.py
+            python3 -m py_compile main.py
             sudo systemctl restart chat-summarizer
-`
