@@ -24,6 +24,7 @@ import json
 import logging
 import os
 import re
+
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -217,7 +218,7 @@ def member_can_run_summarize(member: discord.Member) -> bool:
     return any(role.id in allowed_role_ids for role in member.roles)
 
 
-def validate_summarize_context(interaction: discord.Interaction) -> str | None:
+def validate_summarize_context(interaction: discord.Interaction):
     """Return an error message when interaction cannot be summarized."""
     if not OPENROUTER_API_KEY:
         return 'OPENROUTER_API_KEY is not set in environment variables.'
@@ -288,7 +289,7 @@ def request_openrouter_summary(model: str, chat_logs: str) -> dict[str, Any]:
     }
 
 
-def extract_cost_usd(data: dict[str, Any], headers: requests.structures.CaseInsensitiveDict[str]) -> float | None:
+def extract_cost_usd(data: dict[str, Any], headers: requests.structures.CaseInsensitiveDict[str]) -> float:
     """Try several API fields and headers to get request cost in USD."""
     usage = data.get('usage', {}) if isinstance(data.get('usage', {}), dict) else {}
     for key in ('cost', 'total_cost', 'cost_usd', 'total_cost_usd'):
@@ -473,7 +474,7 @@ def build_summary_file(day_summaries: list[DaySummary]) -> str:
 # ============================================================================
 
 @bot.event
-async def on_ready() -> None:
+async def on_ready():
     """Sync command tree once after bot login."""
     global commands_synced
 
@@ -523,7 +524,7 @@ async def summarize(
     interaction: discord.Interaction,
     period: app_commands.Choice[str],
     quality: app_commands.Choice[str],
-) -> None:
+):
     """Summarize current channel, one request per day, then combine into summary.txt."""
     error_message = validate_summarize_context(interaction)
     if error_message:
